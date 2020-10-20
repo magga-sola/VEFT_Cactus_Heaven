@@ -1,8 +1,13 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const PORT = 3000;
 const app = express();
 const amqp = require('amqplib/callback_api');
+const apiPath = '/api';
+const bodyParser = require('body-parser');
+
+// Parse requests of content-type 'application/json'
+app.use(bodyParser.json());
+
 
 const messageBrokerInfo = {
     exchanges: {
@@ -45,6 +50,19 @@ const configureMessageBroker = channel => {
     app.use(bodyParser.json());
 
     // TODO: Setup route
+
+    // /api/orders [POST]
+
+    app.post(apiPath + "/orders", (req, res) => {
+        const body = req.body;
+        const bodyJson = JSON.stringify(body);
+
+        channel.publish(order, createOrder, new Buffer(bodyJson));
+        console.log(`look what we have here: ${bodyJson}`);
+        return res.status(200).json("OK");
+
+    })
+
 
     app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
 })().catch(e => console.error(e));

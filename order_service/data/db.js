@@ -7,6 +7,7 @@ const connection = mongoose.createConnection('mongodb+srv://eva:eva@cactusheaven
 });
 
 module.exports = {
-    Order: connection.model('Order', orderSchema),
-    OrderItem: connection.model('OrderItem', orderItemSchema)
+    db: connection,
+    Order: connection.model('Order', orderSchema, 'Orders'),
+    OrderItem: connection.model('OrderItem', orderItemSchema, 'OrderItems')
 };
