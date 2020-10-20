@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf730cd2-b726-4992-ac00-249e87653c05" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/email_service/email_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/email_service/email_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +32,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603214193847</updated>
-      <workItem from="1603214197982" duration="286000" />
+      <workItem from="1603214197982" duration="394000" />
     </task>
     <servers />
   </component>
