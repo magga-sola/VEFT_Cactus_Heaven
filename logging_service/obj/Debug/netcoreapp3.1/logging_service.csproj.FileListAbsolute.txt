@@ -1,0 +1,15 @@
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/bin/Debug/netcoreapp3.1/logging_service.deps.json
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/bin/Debug/netcoreapp3.1/logging_service.runtimeconfig.json
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/bin/Debug/netcoreapp3.1/logging_service.runtimeconfig.dev.json
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/bin/Debug/netcoreapp3.1/logging_service.dll
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/bin/Debug/netcoreapp3.1/logging_service.pdb
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/obj/Debug/netcoreapp3.1/logging_service.csprojAssemblyReference.cache
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/obj/Debug/netcoreapp3.1/logging_service.AssemblyInfoInputs.cache
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/obj/Debug/netcoreapp3.1/logging_service.AssemblyInfo.cs
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/obj/Debug/netcoreapp3.1/logging_service.csproj.CoreCompileInputs.cache
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/obj/Debug/netcoreapp3.1/logging_service.dll
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/obj/Debug/netcoreapp3.1/logging_service.pdb
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/obj/Debug/netcoreapp3.1/logging_service.genruntimeconfig.cache
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/bin/Debug/netcoreapp3.1/RabbitMQ.Client.dll
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/bin/Debug/netcoreapp3.1/System.Threading.Channels.dll
+/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/obj/Debug/netcoreapp3.1/logging_service.csproj.CopyComplete

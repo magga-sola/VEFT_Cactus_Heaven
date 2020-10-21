@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "u+WH6ihiqRbeHWCS6In2iSDvQMp5gRlo9EE8o0TTMdUqWVYdgm2to6uAN5hsiB3IPcrgMOpBiAcyvG4UI0KPpA==",
+  "success": true,
+  "projectFilePath": "/Users/adalsteinnleifsson/Desktop/2020 Haust/Vefþjónustur/Assignments/CactusHeaven/logging_service/logging_service.csproj",
+  "expectedPackageFiles": [
+    "/Users/adalsteinnleifsson/.nuget/packages/rabbitmq/3.6.2/rabbitmq.3.6.2.nupkg.sha512",
+    "/Users/adalsteinnleifsson/.nuget/packages/rabbitmq.client/6.2.1/rabbitmq.client.6.2.1.nupkg.sha512",
+    "/Users/adalsteinnleifsson/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
+    "/Users/adalsteinnleifsson/.nuget/packages/system.threading.channels/4.7.1/system.threading.channels.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}
