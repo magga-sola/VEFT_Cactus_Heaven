@@ -1,7 +1,7 @@
 const amqp = require('amqplib/callback_api');
 const db = require('data/db').db;
-const orderSchema = require('data/db').Order;
-const orderItemSchema = require('data/db').OrderItem;
+const dbOrder = require('data/db').Order;
+const dbOrderItem = require('data/db').OrderItem;
 
 const messageBrokerInfo = {
     exchanges: {
@@ -56,7 +56,7 @@ const createOrder = async (order_object) => {
     const today = new Date();
 
     try {
-        const newOrder = await orderSchema.create({
+        const newOrder = await dbOrder.create({
             customerEmail: order_object.email,
             totalPrice: finalPrice,
             orderDate: today
@@ -74,7 +74,7 @@ const createOrderItem = async (order_object, new_order) => {
         for ( let i = 0; i < items; i++) {
             const rowPrice = await (items[i].quantity * items[i].unitPrice);
 
-            const newOrderItem = await orderItemSchema.create({
+            const newOrderItem = await dbOrderItem.create({
                 description: items[i].description,
                 quantity: items[i].quantity,
                 unitPrice: items[i].unitPrice,
@@ -112,10 +112,6 @@ const createOrderItem = async (order_object, new_order) => {
         //creates orderItems in mongodb
         createOrderItem(dataJson);
     })
-
-    // (10%) It should consume the order created event using the queue “order_queue”
-    // (15%) It should create a new order using information from the event
-    // (15%) It should also create order items using information from the same event
 
 
 })().catch(e => console.error(e));
