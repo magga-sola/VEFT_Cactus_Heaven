@@ -22,6 +22,17 @@ namespace logging_service
             // gotta get connected to the localhost!
             var factory = new ConnectionFactory() {_hostName = "localhost"};
 
+            // make the message
+            const string logMessage = "the log"; //var body = ea.Body, var message = Encoding.UTF8.GetString(body);
+
+
+            // get path and write message
+            const string path = Directory.GetCurrentDirectory();
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(path, "log.txt"), true))
+            {
+                outputFile.WriteLine("Log: " + logMessage);
+            }
+
         }
     }
 }
