@@ -8,9 +8,21 @@ namespace logging_service
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+
+        // look at all these chickens! sorry, just here are our variables to keep going
+            const string queue = "logging_queue";
+            const string exchangeRoute = "order_exchange";
+            const string routeKey = "create_order";
+            const string logFile = "log.txt";
+            // should they be private_readonly_strings?
+
+
+            // gotta get connected to the localhost!
+            var factory = new ConnectionFactory() {_hostName = "localhost"};
+
+
         }
     }
 }
