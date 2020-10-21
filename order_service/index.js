@@ -45,15 +45,51 @@ const configureMessageBroker = channel => {
 
 
 
-const createOrder = async (order_event) => {
-    const bool = await orderSchema.create(order_event);
-    return bool;
+const createOrder = async (order_object) => {
+
+    let finalPrice = 0;
+
+    order_object.items.forEach( item => {
+        finalPrice += (item.quantity * item.unitPrice);
+    });
+
+    const today = new Date();
+
+    try {
+        const newOrder = await orderSchema.create({
+            customerEmail: order_object.email,
+            totalPrice: finalPrice,
+            orderDate: today
+        })
+
+    } catch(err) {
+        throw (err);
+    }
 }
 
-const createOrderItem = async (order_event) => {
-    const bool = await orderItemSchema.create(order_event);
-    return bool;
+const createOrderItem = async (order_object, new_order) => {
+    try {
+        let items = order_object.items;
+
+        for ( let i = 0; i < items; i++) {
+            const rowPrice = await (items[i].quantity * items[i].unitPrice);
+
+            const newOrderItem = await orderItemSchema.create({
+                description: items[i].description,
+                quantity: items[i].quantity,
+                unitPrice: items[i].unitPrice,
+                rowPrice: rowPrice,
+                orderId: new_order._id
+            })
+        }
+        return; //TODO: should we return something or just leave this?
+
+    } catch (err) {
+        throw(err);
+    }
 }
+
+
 
 (async () => {
     const messageBrokerConnection = await createMessageBrokerConnection();
