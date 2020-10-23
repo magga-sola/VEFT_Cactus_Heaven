@@ -21,7 +21,6 @@ namespace logging_service
         using(var connection = factory.CreateConnection())
         using(var channel = connection.CreateModel())
         {
-            channel.ExchangeDeclare(exchange: exchange, type: ExchangeType.Direct, durable: true);
             
             channel.QueueDeclare(queue: queueName,
                                  durable: false,
@@ -29,11 +28,14 @@ namespace logging_service
                                  autoDelete: false,
                                  arguments: null);
 
+            channel.ExchangeDeclare(exchange: exchange,
+                                    type: ExchangeType.Direct, 
+                                    durable: true );
+
             channel.QueueBind(queue: queueName,
                                   exchange: exchange,
                                   routingKey: routingKey);
             
-
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (model, ea) =>
             {
@@ -50,7 +52,9 @@ namespace logging_service
             channel.BasicConsume(queue: queueName,
                                  autoAck: true,
                                  consumer: consumer);
-            
+
+            Console.ReadLine();
+    
             
         }
     }
