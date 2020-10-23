@@ -52,8 +52,10 @@ const configureMessageBroker = channel => {
         const body = req.body;
         const bodyJson = JSON.stringify(body);
 
+
         channel.publish(order, createOrder, new Buffer(bodyJson));
         console.log(`look what we have here: ${bodyJson}`);
+        console.log(`${bodyJson}`);
         return res.status(200).json();
 
     });

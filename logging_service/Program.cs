@@ -20,7 +20,7 @@ namespace logging_service
 
 
             // gotta get connected to the localhost!
-            var factory = new ConnectionFactory() {_hostName = "localhost"};
+            var factory = new ConnectionFactory() {hostName = "localhost"};
 
             // make the message
             const string logMessage = "the log"; //var body = ea.Body, var message = Encoding.UTF8.GetString(body);

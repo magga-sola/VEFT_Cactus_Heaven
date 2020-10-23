@@ -1,7 +1,7 @@
 const amqp = require('amqplib/callback_api');
-const db = require('data/db').db;
-const dbOrder = require('data/db').Order;
-const dbOrderItem = require('data/db').OrderItem;
+const { Order } = require('./data/db');
+const { OrderItem} = require('./data/db');
+
 
 const messageBrokerInfo = {
     exchanges: {
@@ -12,7 +12,7 @@ const messageBrokerInfo = {
     },
     routingKeys: {
         input: 'create_order',
-        output: 'order_logged'
+        output: 'order_created'
     }
 }
 
@@ -32,13 +32,13 @@ const createChannel = connection => new Promise((resolve, reject) => {
 
 const configureMessageBroker = channel => {
     const { orderQueue } = messageBrokerInfo.queues;
-    const { input } = messageBrokerInfo.routingKeys;
+    const { createOrder } = messageBrokerInfo.routingKeys;
 
-    channel.assertQueue(orderQueue, { durable: true});
 
     Object.values(messageBrokerInfo.exchanges).forEach(val => {
         channel.assertExchange(val, 'direct', { durable: true });
-        channel.bindQueue(orderQueue, val, input);
+        channel.assertQueue(orderQueue, { durable: true});
+        channel.bindQueue(orderQueue, val, createOrder);
     });
 
 };
@@ -56,7 +56,7 @@ const createOrder = async (order_object) => {
     const today = new Date();
 
     try {
-        const newOrder = await dbOrder.create({
+        const newOrder = await Order.create({
             customerEmail: order_object.email,
             totalPrice: finalPrice,
             orderDate: today
@@ -74,7 +74,7 @@ const createOrderItem = async (order_object, new_order) => {
         for ( let i = 0; i < items; i++) {
             const rowPrice = await (items[i].quantity * items[i].unitPrice);
 
-            const newOrderItem = await dbOrderItem.create({
+            const newOrderItem = await OrderItem.create({
                 description: items[i].description,
                 quantity: items[i].quantity,
                 unitPrice: items[i].unitPrice,
@@ -92,26 +92,32 @@ const createOrderItem = async (order_object, new_order) => {
 
 
 (async () => {
-    const messageBrokerConnection = await createMessageBrokerConnection();
-    const channel = await createChannel(messageBrokerConnection);
+    const connection = await createMessageBrokerConnection();
+    const channel = await createChannel(connection);
 
-    configureMessageBroker(channel);
+    //configureMessageBroker(channel);
 
     const { order } = messageBrokerInfo.exchanges;
-    const { orderQueue } = messageBrokerConnection.queues;
+    const { orderQueue } = connection.queues;
     const { output } = messageBrokerInfo.routingKeys;
 
 
     // TODO: Setup consumer
     channel.consume(orderQueue, data => {
+        console.log(data.content.toString());
         const dataJson = JSON.parse(data.content.toString()); //the order to be put into the database
 
         //creates an order in mongodb
-        createOrder(dataJson);
+        const newOrder = createOrder(dataJson);
 
         //creates orderItems in mongodb
-        createOrderItem(dataJson);
-    })
+        const newOrderItem = createOrderItem(dataJson);
+
+        channel.publish(order, output, new Buffer(JSON.stringify(newOrder)));
+
+        console.log(`[x] Sent: ${JSON.stringify(dataJson)}`);
+        //channel.publish(order, output, new Buffer(JSON.stringify(newOrderItem)));
+    }, { noAck: true});
 
 
 })().catch(e => console.error(e));
