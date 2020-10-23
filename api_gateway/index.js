@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 
 // Parse requests of content-type 'application/json'
 
-
 const messageBrokerInfo = {
     exchanges: {
         order: 'order_exchange'
@@ -57,7 +56,7 @@ const configureMessageBroker = channel => {
         console.log(`look what we have here: ${bodyJson}`);
         return res.status(200).json();
 
-    })
+    });
 
 
     app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
