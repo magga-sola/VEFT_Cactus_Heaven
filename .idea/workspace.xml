@@ -20,11 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf730cd2-b726-4992-ac00-249e87653c05" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/order_service/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_gateway/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email_service/email_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/email_service/email_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logging_service/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/logging_service/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order_service/data/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/order_service/data/db.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order_service/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/order_service/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +76,8 @@
       <workItem from="1603237481261" duration="6227000" />
       <workItem from="1603287617607" duration="1118000" />
       <workItem from="1603316242185" duration="782000" />
-      <workItem from="1603473776660" duration="4495000" />
+      <workItem from="1603473776660" duration="6875000" />
+      <workItem from="1603484428529" duration="1019000" />
     </task>
     <servers />
   </component>

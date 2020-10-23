@@ -1,6 +1,6 @@
 const amqp = require('amqplib/callback_api');
-const { Order } = require('./data/db');
-const { OrderItem} = require('./data/db');
+const dbOrder = require('./data/db').Order;
+const dbOrderItem = require('./data/db').OrderItem;
 
 
 const messageBrokerInfo = {
@@ -56,7 +56,7 @@ const createOrder = async (order_object) => {
     const today = new Date();
 
     try {
-        const newOrder = await Order.create({
+        const newOrder = await dbOrder.create({
             customerEmail: order_object.email,
             totalPrice: finalPrice,
             orderDate: today
@@ -74,7 +74,7 @@ const createOrderItem = async (order_object, new_order) => {
         for ( let i = 0; i < items; i++) {
             const rowPrice = await (items[i].quantity * items[i].unitPrice);
 
-            const newOrderItem = await OrderItem.create({
+            const newOrderItem = await dbOrderItem.create({
                 description: items[i].description,
                 quantity: items[i].quantity,
                 unitPrice: items[i].unitPrice,
@@ -104,9 +104,8 @@ const createOrderItem = async (order_object, new_order) => {
 
     // TODO: Setup consumer
     channel.consume(orderQueue, data => {
-        console.log(data.content.toString());
         const dataJson = JSON.parse(data.content.toString()); //the order to be put into the database
-
+        console.log(dataJson)
         //creates an order in mongodb
         const newOrder = createOrder(dataJson);
 

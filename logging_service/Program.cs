@@ -1,38 +1,128 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
+using System.Text;
+using System.IO;
 
 namespace logging_service
 {
-    class Program
+    class Receive
+{
+    public static void Main()
     {
-        public static void Main()
+
+        const string queueName = "logging_queue";
+        const string exchange = "order_exchange";
+        const string routingKey = "create_order";
+        const string fileName = "log.txt";
+
+
+        var factory = new ConnectionFactory() { HostName = "localhost" };
+        using(var connection = factory.CreateConnection())
+        using(var channel = connection.CreateModel())
         {
+            
+            channel.QueueDeclare(queue: queueName,
+                                 durable: false,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
 
-            // look at all these chickens! sorry, just here are our variables to keep going
-            // TODO: should they be private_readonly_strings?
-            const string queue = "logging_queue";
-            const string exchangeRoute = "order_exchange";
-            const string routeKey = "create_order";
-            const string fileName = "log.txt";
+            channel.QueueBind(queue: queueName,
+                                  exchange: exchange,
+                                  routingKey: routingKey);
+            
 
-
-            // gotta get connected to the localhost!
-            var factory = new ConnectionFactory() {hostName = "localhost"};
-
-            // make the message
-            const string logMessage = "the log"; //var body = ea.Body, var message = Encoding.UTF8.GetString(body);
-
-
-            // get path and write message
-            const string path = Directory.GetCurrentDirectory();
-            using (StreamWriter outputFile = new StreamWriter(Path.Combine(path, "log.txt"), true))
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += (model, ea) =>
             {
-                outputFile.WriteLine("Log: " + logMessage);
-            }
+                var body = ea.Body.ToArray();
+                var logMessage = Encoding.UTF8.GetString(body);
+                Console.WriteLine(" [x] Received {0}", logMessage); // WE GOT IT! BUT NOW WE JUST HAVE TO WRITE IT INTO A FILE
 
+                using (StreamWriter writer = System.IO.File.AppendText(fileName))
+                {
+                    writer.WriteLine(logMessage);
+                }
+            };
+
+            channel.BasicConsume(queue: queueName,
+                                 autoAck: true,
+                                 consumer: consumer);
+            
+            
         }
     }
 }
+
+}
+
+
+
+
+
+
+
+
+
+// using RabbitMQ.Client;
+// using RabbitMQ.Client.Events;
+// using System;
+// using System.IO;
+// using System.Text;
+
+// class logging_service_class
+// {
+//     public static void Main()
+//     {
+//         const string queueName = "logging_queue";
+//         const string exchange = "order_exchange";
+//         const string inputKey = "create_order";
+
+
+//         var factory = new ConnectionFactory() { HostName = "localhost" };
+//         using(var connection = factory.CreateConnection())
+//         using(var channel = connection.CreateModel())
+//         {
+//             channel.QueueDeclare(queue: queueName,
+//                                  durable: false,
+//                                  exclusive: false,
+//                                  autoDelete: false,
+//                                  arguments: null);
+
+//             string message = "Hello World!";
+//             var body = Encoding.UTF8.GetBytes(message);
+
+//             channel.ExchangeDeclare(exchange:exchange, type:"direct");
+//             var queue = channel.QueueDeclare().QueueName;
+
+//             channel.QueueBind(queue: queue,
+//                               exchange:exchange,
+//                               routingKey:inputKey
+//                               );
+
+//             var consumer = new EventingBasicConsumer(channel);
+
+//                 consumer.Received += (model, ea) =>
+//                 {
+//                     var body = ea.Body;
+//                     var message = Encoding.UTF8.GetString(body);
+//                     Console.WriteLine(message);
+
+//                     string path = Directory.GetCurrentDirectory();
+//                     using (StreamWriter outputFile = new StreamWriter(Path.Combine(path, "log.txt"), true))
+//                     {
+                        
+//                         outputFile.WriteLine("Log: " + message);
+//                     }
+//                 };
+
+//             channel.BasicConsume(queue: queue,
+//                                  autoAck: true, // a eg ad setja output key herna?
+//                                  consumer: consumer);
+
+//             channel.Close();
+//             connection.Close();
+//         }
+//     }
+// }

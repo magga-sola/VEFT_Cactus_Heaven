@@ -33,9 +33,9 @@ def send_order_email(ch, method, properties, data):
     representation = email_template % items_html
     send_simple_message(parsed_msg['email'], 'Successful order!', representation)
 
-channel.basic_consume(send_order_email,
-                      queue=email_queue_name,
-                      no_ack=True)
+channel.basic_consume(email_queue_name,
+                      send_order_email,
+                      auto_ack=True)
 
 channel.start_consuming()
 connection.close()
