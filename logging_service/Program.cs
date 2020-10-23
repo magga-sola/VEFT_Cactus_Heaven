@@ -21,6 +21,7 @@ namespace logging_service
         using(var connection = factory.CreateConnection())
         using(var channel = connection.CreateModel())
         {
+            channel.ExchangeDeclare(exchange: exchange, type: ExchangeType.Direct, durable: true);
             
             channel.QueueDeclare(queue: queueName,
                                  durable: false,
@@ -38,7 +39,7 @@ namespace logging_service
             {
                 var body = ea.Body.ToArray();
                 var logMessage = Encoding.UTF8.GetString(body);
-                Console.WriteLine(" [x] Received {0}", logMessage); // WE GOT IT! BUT NOW WE JUST HAVE TO WRITE IT INTO A FILE
+                Console.WriteLine(" [x] Received {0}", logMessage); 
 
                 using (StreamWriter writer = System.IO.File.AppendText(fileName))
                 {

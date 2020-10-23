@@ -1,5 +1,4 @@
 const amqp = require('amqplib/callback_api');
-const fs = require('fs');
 const dbOrder = require('./data/db').Order;
 const dbOrderItem = require('./data/db').OrderItem;
 
@@ -99,6 +98,6 @@ const createOrderItems = async (order_object, new_order) => {
         const orderList = await createOrderItems(dataJson, newOrder);
         channel.publish(order, output, new Buffer(JSON.stringify(newOrder)));
 
-        //console.log(`[x] Sent: ${JSON.stringify(dataJson)}`);
+        console.log(`[x] Sent: ${JSON.stringify(dataJson)}`);
     }, { noAck: true });
 })().catch(e => console.error(e));
